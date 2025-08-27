@@ -13,6 +13,11 @@ Author: Tausif Alam
 
 */
 
+// stdio interface using nodejs 
+const readln = require('node:readline');
+const { stdin: input, stdout: output } = require('node:process');
+const rl = readln.createInterface({ input, output });
+
 class Books {
     constructor (title, author) {
         this.title = title;
