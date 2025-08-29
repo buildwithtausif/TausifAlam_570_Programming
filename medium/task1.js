@@ -15,9 +15,9 @@ Author: Tausif Alam
 
 // readline module for interactive CLI 
 const readln = require('node:readline');
-const { stdin: input, stdout: output, stdin } = require('node:process');
 
 
+// Library Classes
 class Books {
     constructor (title, author) {
         this.title = title;
@@ -77,7 +77,7 @@ const rl = readln.createInterface({
 function appMenu() {
     console.log(`
     =========================
-    📚 Library Book Manager 📚
+    📚 Reader's Library Admin 📚
     =========================
     1. Add Book
     2. Search Book by Title
