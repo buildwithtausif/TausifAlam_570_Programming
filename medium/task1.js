@@ -13,10 +13,10 @@ Author: Tausif Alam
 
 */
 
-// stdio interface using nodejs 
+// readline module for interactive CLI 
 const readln = require('node:readline');
-const { stdin: input, stdout: output } = require('node:process');
-const rl = readln.createInterface({ input, output });
+const { stdin: input, stdout: output, stdin } = require('node:process');
+
 
 class Books {
     constructor (title, author) {
@@ -41,12 +41,12 @@ class Library {
     // search for books by title
     searchBook(title) {
         const result = this.books.filter(book => {
-            book.title.toLowerCase().includes(title.toLowerCase());
+           return book.title.toLowerCase().includes(title.toLowerCase());
         });
 
         if (result.length > 0) {
             result.forEach(item => {
-                console.log(`Found books relating to your query: ${item.title} by ${item.author}`)
+                console.log(`Found 🤞😊 books relating to your query: ${item.title} by ${item.author}`)
             })
         } else {
             console.log("No Books Found 🙅🚫");
@@ -56,8 +56,8 @@ class Library {
     // showAllBooks
     showAllBooks(title, author) {
         if (this.books.length > 0) {
-            this.books.forEach((b, index) => {
             console.log("Available Books 👇");
+            this.books.forEach((b, index) => {
             console.log(`${index+1}. ${b.title} -by ${b.author}`);
             })
         } else {
@@ -65,3 +65,57 @@ class Library {
         }
     }
 }
+
+// create instance of library
+const library = new Library();
+// create instance of readline
+const rl = readln.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+function appMenu() {
+    console.log(`
+    =========================
+    📚 Library Book Manager 📚
+    =========================
+    1. Add Book
+    2. Search Book by Title
+    3. Show All Books
+    4. Exit
+    `);
+
+    // prompt user for choice
+    rl.question("Choose an option (1-4): ", (choice) => {
+        switch (choice) {
+            case "1":
+                 rl.question("Enter Book Title: ", (title) => {
+                    rl.question("Enter Author Name: ", (author) => {
+                        library.addBooks(title,author);
+                        setTimeout(() => {
+                            appMenu();
+                        }, 500);
+                    });
+                 });
+                break;
+            case "2": 
+                 rl.question("Please enter book title to search: ", (title) => {
+                    library.searchBook(title);
+                    setTimeout(() => {
+                        appMenu();
+                    }, 500);
+                 });
+                break;
+            case "3":
+                library.showAllBooks();
+                setTimeout(() => {
+                    appMenu();
+                }, 500);
+                break;
+            case "4":
+                console.log("Have a gr8 😍 read! byee :)");
+                rl.close();
+                break;
+        }
+    });
+}appMenu();
