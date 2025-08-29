@@ -7,6 +7,5 @@ Author: Tausif Alam
 **** use nodejs to run the code
 */
 
-function wordCount() {
-    
-}
+// readline module for user-input
+const readln = require('node:readline');

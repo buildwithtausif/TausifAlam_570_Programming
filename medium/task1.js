@@ -54,7 +54,7 @@ class Library {
     }
 
     // showAllBooks
-    showAllBooks(title, author) {
+    showAllBooks() {
         if (this.books.length > 0) {
             console.log("Available Books 👇");
             this.books.forEach((b, index) => {
@@ -90,20 +90,44 @@ function appMenu() {
         switch (choice) {
             case "1":
                  rl.question("Enter Book Title: ", (title) => {
-                    rl.question("Enter Author Name: ", (author) => {
-                        library.addBooks(title,author);
+                    if (!title) {
+                        console.log("⚠️ Title is required!");
                         setTimeout(() => {
-                            appMenu();
+                                appMenu();
                         }, 500);
+                        return 0; 
+                    } else {
+                    rl.question("Enter Author Name: ", (author) => {
+                    if (!author) {
+                        console.log("⚠️ Author is required!");
+                       setTimeout(() => {
+                                appMenu();
+                        }, 500);
+                        return 0;
+                    } else {
+                            library.addBooks(title,author);
+                            setTimeout(() => {
+                                appMenu();
+                            }, 500);
+                        }
                     });
+                    }
                  });
                 break;
             case "2": 
                  rl.question("Please enter book title to search: ", (title) => {
-                    library.searchBook(title);
-                    setTimeout(() => {
-                        appMenu();
-                    }, 500);
+                    if (!title) {
+                        console.log("Invalid search query 🚫");
+                        setTimeout(() => {
+                            appMenu();
+                        }, 500);
+                        return 0;
+                    } else {
+                        library.searchBook(title);
+                        setTimeout(() => {
+                            appMenu();
+                        }, 500);
+                    }
                  });
                 break;
             case "3":
@@ -115,7 +139,7 @@ function appMenu() {
             case "4":
                 console.log("Have a gr8 😍 read! byee :)");
                 rl.close();
-                break;
+                process.exit(0);
         }
     });
 }appMenu();
