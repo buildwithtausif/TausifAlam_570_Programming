@@ -4,7 +4,7 @@ Take a paragraph of text as input and print the top 3 most frequent words.
 HashMap, Sorting, Strings
 
 Author: Tausif Alam
-**** use nodejs to run the code
+**** Use Node.js to run this javascript :)
 */
 
 // readline module for user-input

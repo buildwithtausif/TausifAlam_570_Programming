@@ -1,0 +1,13 @@
+{
+  "response_code": 0,
+  "results": [
+    {
+      "type": "multiple",
+      "difficulty": "medium",
+      "category": "Entertainment: Music",
+      "question": "Who is the lead singer of Silverchair?",
+      "correct_answer": "Daniel Johns",
+      "incorrect_answers": ["Chris Joannou", "Ben Gillies", "Paul Mac"]
+    }
+  ]
+}
