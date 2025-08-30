@@ -1,13 +1,12 @@
 {
-  "response_code": 0,
-  "results": [
-    {
-      "type": "multiple",
-      "difficulty": "medium",
-      "category": "Entertainment: Music",
-      "question": "Who is the lead singer of Silverchair?",
-      "correct_answer": "Daniel Johns",
-      "incorrect_answers": ["Chris Joannou", "Ben Gillies", "Paul Mac"]
-    }
+  "type": "multiple",
+  "difficulty": "easy",
+  "category": "Science: Computers",
+  "question": "If you were to code software in this language you&#039;d only be able to type 0&#039;s and 1&#039;s.",
+  "correct_answer": "Binary",
+  "incorrect_answers": [
+    "JavaScript",
+    "C++",
+    "Python"
   ]
 }
