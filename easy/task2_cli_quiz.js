@@ -11,6 +11,10 @@ Author: Tausif Alam
 //kbc-feel
 const path = require("path");
 const sound = require("sound-play");
+// readline module for user-input
+const readln = require("node:readline");
+// for colors inside terminal
+const colors = require("colors");
 
 function playSound(filename) {
   const filePath = path.join(__dirname, "sounds", filename);
@@ -21,16 +25,10 @@ function playSound(filename) {
       .catch((err) => reject(err));
   });
 }
-// readline module for user-input
-const readln = require("node:readline");
-
-// for colors inside terminal
-const colors = require("colors");
-
 // for ascii-art
 const figlet = require("figlet");
 // headding for CLI app
-figlet("CLI Quiz", function (err, data) {
+figlet("Kaun Banega Crorepati", function (err, data) {
   playSound("intro.mp3");
   if (err) {
     console.log("Something went wrong...");
@@ -47,14 +45,7 @@ const rl = readln.createInterface({
 });
 
 // my idea is to not hardcode question but to get them with their answers from somewhere else in node
-/* 
-    rules are like,
-    attempt any five questions out of 7
-    maximum marks to be 50 i.e 5x10 = 50, 7x10 = 70
-
-
-    for that i need to create an api-pipeline to access respone right into terminal
-*/
+// for that i need to create an api-pipeline to access respone right into terminal
 
 async function getQuestions() {
   const source = "https://opentdb.com/api.php?amount=5&category=18"; // tech related questionaire
@@ -83,14 +74,16 @@ async function main() {
 }
 main();
 
+// randomize the order of choices
 function shuffle(array) {
   return array.sort(() => Math.random() - 0.5);
 }
 
+// quiz function
 function startQuiz(questions) {
   let score = 0;
   let index = 0;
-  playSound("kbc_question.mp3"); //play question sound
+  playSound("kbc_question.mp3"); //play question sound for index 0
   function ask() {
     if (index < questions.length) {
       const q = questions[index];
@@ -100,34 +93,60 @@ function startQuiz(questions) {
       options.forEach((element, i) => {
         console.log(`${i + 1}. ${element}`);
       });
-
+      // take user input using readline
       rl.question("Please select your answer (1-4): ", (answer) => {
         const choice = options[parseInt(answer) - 1];
         if (choice === q.correct_answer) {
           score += 10;
           console.log("Yayy! correct answer".brightYellow);
 
+          // increment the index in order to get different question instead of getting same question each time
           index++;
-          //delay for proper sync with sound
-          playSound("kbc_question.mp3");
-          setTimeout(()=> {
-              ask();
-          },3000);
+          //kbc_question sound
+          if (index < 5) {
+            // play this only if the index is less than 5 coz, at 5th index we need to play 7 crore.mp3
+            playSound("kbc_question.mp3");
+          } else {
+            playSound("7cr.mp3");
+          }
+          // delay for sound-sync
+          setTimeout(() => {
+            ask();
+          }, 3000);
         } else {
-          console.log("You lose! 🙅".bgBrightRed);
-          console.log(`Your score: ${score}`);
-          rl.close();
-          process.exit(0);
+          // play this sound for every wrong answer
+          playSound("kbc_wrong.mp3");
+          // delay for proper sync with sound
+          setTimeout(() => {
+            figlet(`You lose!!! Score: ${score}`, function (err, data) {
+              if (err) {
+                console.log("Something went wrong...");
+                console.dir(err);
+                return;
+              }
+              console.log(data.brightRed);
+            });
+            rl.close();
+            process.exit(0); //exit node process
+          }, 2500);
         }
       });
     } else {
-      console.log(`\nQuiz finished! Your score: ${score}`);
+      // 7 crore
+      figlet(`7 Crore!!!  Score: ${score}`, function (err, data) {
+        if (err) {
+          console.log("Something went wrong...");
+          console.dir(err);
+          return;
+        }
+        console.log(data.brightBlue);
+      });
       rl.close();
-      process.exit(0);
+      process.exit(0); //exit node process
     }
   }
 
-  //delay for proper sync with sound
+  //delay for proper sync with sound (intro sound)
   setTimeout(() => {
     ask();
   }, 14000);
