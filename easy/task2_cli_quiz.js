@@ -18,12 +18,7 @@ const colors = require("colors");
 
 function playSound(filename) {
   const filePath = path.join(__dirname, "sounds", filename);
-  return new Promise((resolve, reject) => {
-    sound
-      .play(filePath)
-      .then(() => resolve())
-      .catch((err) => reject(err));
-  });
+  sound.play(filePath);
 }
 // for ascii-art
 const figlet = require("figlet");
