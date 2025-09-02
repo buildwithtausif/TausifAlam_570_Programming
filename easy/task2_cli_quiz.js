@@ -22,7 +22,7 @@ function playSound(filename) {
 }
 // for ascii-art
 const figlet = require("figlet");
-// headding for CLI app
+// heading for CLI app
 figlet("Kaun Banega Crorepati", function (err, data) {
   playSound("intro.mp3");
   if (err) {
