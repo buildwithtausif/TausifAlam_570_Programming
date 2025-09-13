@@ -144,5 +144,5 @@ function startQuiz(questions) {
   //delay for proper sync with sound (intro sound)
   setTimeout(() => {
     ask();
-  }, 100);
+  }, 14000);
 }
